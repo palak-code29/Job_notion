@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const app = express();
 
@@ -16,15 +17,10 @@ const database = require("./config/database");
 
 const PORT = process.env.PORT || 4000;
 
-// ✅ ENV CHECK LOGS
-console.log("PORT:", process.env.PORT);
-console.log("DB URL:", process.env.DATABASE_URL);
-console.log("JWT SECRET:", process.env.JWT_SECRET);
-
-// ✅ Connecting to database
+// Connect to Database
 database.connect();
 
-// ✅ Middlewares
+// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
@@ -35,7 +31,6 @@ app.use(
   }),
 );
 
-// ✅ File Upload Middleware
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -43,25 +38,25 @@ app.use(
   }),
 );
 
-// ✅ Connecting to cloudinary
+// Connect to Cloudinary
 cloudinaryConnect();
 
-// ✅ Routes
+// Routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentsRoutes);
 app.use("/api/v1/reach", contactUsRoute);
 
-// ✅ Testing route
+// Default Route
 app.get("/", (req, res) => {
-  return res.json({
+  res.json({
     success: true,
-    message: "Your server is up and running ...",
+    message: "Your server is up and running...",
   });
 });
 
-// ✅ Server start
+// Start Server
 app.listen(PORT, () => {
-  console.log(`App is listening at ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
