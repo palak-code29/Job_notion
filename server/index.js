@@ -17,6 +17,8 @@ const database = require("./config/database");
 
 const PORT = process.env.PORT || 4000;
 
+console.log("Mongo URI:", process.env.MONGO_CONNECTION_STRING);
+
 // Connect to Database
 database.connect();
 
